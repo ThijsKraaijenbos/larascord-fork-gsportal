@@ -42,9 +42,9 @@ trait InteractsWithDiscord
     /**
      * Get the user's access token relationship.
      */
-    public function accessToken(): embedsOne
+    public function accessToken(): hasOne
     {
-        return $this->embedsOne(DiscordAccessToken::class);
+        return $this->hasOne(DiscordAccessToken::class);
     }
 
     /**
