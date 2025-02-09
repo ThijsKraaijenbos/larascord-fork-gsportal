@@ -59,7 +59,7 @@ trait InteractsWithDiscord
 
             return $accessToken ? new AccessToken($accessToken) : null;
         }
-
+        dd("Current AccessToken = " . $accessToken);
         return new AccessToken($accessToken);
     }
 
