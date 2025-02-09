@@ -12,13 +12,13 @@ return new class extends Migration
     public function up(): void
     {
         Schema::table('users', function (Blueprint $table) {
-            $table->string('global_name')->nullable()->after('username');
+            $table->string('global_name')->nullable(); // Removed the 'after()' method
             $table->string('discriminator')->nullable()->change();
-            $table->string('banner')->nullable()->after('verified');
-            $table->string('banner_color')->nullable()->after('banner');
-            $table->string('accent_color')->nullable()->after('banner_color');
-            $table->string('premium_type')->nullable()->after('mfa_enabled');
-            $table->string('public_flags')->nullable()->after('premium_type');
+            $table->string('banner')->nullable(); // Removed the 'after()' method
+            $table->string('banner_color')->nullable(); // Removed the 'after()' method
+            $table->string('accent_color')->nullable(); // Removed the 'after()' method
+            $table->string('premium_type')->nullable(); // Removed the 'after()' method
+            $table->string('public_flags')->nullable(); // Removed the 'after()' method
             $table->boolean('verified')->nullable()->change();
         });
     }
