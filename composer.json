@@ -32,6 +32,8 @@
         "php": "^8.2|^8.3",
         "laravel/framework": "^11",
         "guzzlehttp/guzzle": "^7.5",
-        "laravel/breeze": "^v2.0"
+        "laravel/breeze": "^v2.0",
+        "jenssegers/mongodb": "^5.1",
+        "mongodb/laravel-mongodb": "^5.1"
     }
 }

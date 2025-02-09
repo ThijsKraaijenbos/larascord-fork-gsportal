@@ -10,6 +10,7 @@ use Illuminate\Support\Collection;
 use Jakyeru\Larascord\Services\DiscordService;
 use Jakyeru\Larascord\Types\AccessToken;
 use Jakyeru\Larascord\Types\GuildMember;
+use MongoDB\Laravel\Relations\EmbedsOne;
 
 trait InteractsWithDiscord
 {
@@ -41,9 +42,9 @@ trait InteractsWithDiscord
     /**
      * Get the user's access token relationship.
      */
-    public function accessToken(): HasOne
+    public function accessToken(): embedsOne
     {
-        return $this->hasOne(DiscordAccessToken::class);
+        return $this->embedsOne(DiscordAccessToken::class);
     }
 
     /**
@@ -51,7 +52,7 @@ trait InteractsWithDiscord
      */
     public function getAccessToken(): ?AccessToken
     {
-        $accessToken = $this->accessToken()->first();
+        $accessToken = $this->accessToken();
 
         if ($accessToken && $accessToken->expires_at->isPast()) {
             $accessToken = $this->refreshAccessToken();
