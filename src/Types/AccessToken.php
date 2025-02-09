@@ -37,7 +37,7 @@ class AccessToken
     /**
      * AccessToken constructor.
      */
-    public function __construct(object $data)
+    public function  __construct(object $data)
     {
         $this->access_token = $data->access_token;
         $this->token_type = $data->token_type;
