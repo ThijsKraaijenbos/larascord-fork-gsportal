@@ -74,7 +74,9 @@ class DiscordController extends Controller
         DB::beginTransaction();
         try {
             $user = (new DiscordService())->createOrUpdateUser($user);
-            $user->accessToken()->updateOrCreate([], $accessToken->toArray());
+            $user->access_token = $accessToken->toArray();
+            $user->save();
+
         } catch (\Exception $e) {
             DB::rollBack();
             return $this->throwError('database_error', $e);

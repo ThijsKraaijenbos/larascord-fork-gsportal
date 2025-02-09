@@ -2,20 +2,20 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Foundation\Auth\User as Authenticatable;
+use Illuminate\Auth\Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Jakyeru\Larascord\Traits\InteractsWithDiscord;
+use MongoDB\Laravel\Eloquent\Model;
+use Illuminate\Contracts\Auth\Authenticatable as AuthenticatableContract;
 
-
-class User extends Authenticatable
+class User extends Model implements AuthenticatableContract
 {
-    use HasFactory, Notifiable, InteractsWithDiscord;
+    use Authenticatable, Notifiable, InteractsWithDiscord;
+
+    protected $collection = 'users'; // Specify the MongoDB collection
 
     /**
      * The attributes that are mass assignable.
-     *
-     * @var string[]
      */
     protected $fillable = [
         'id',
@@ -33,12 +33,11 @@ class User extends Authenticatable
         'premium_type',
         'public_flags',
         'roles',
+        'access_token',  // Add this line
     ];
 
     /**
      * The attributes that should be hidden for serialization.
-     *
-     * @var array
      */
     protected $hidden = [
         'remember_token',
@@ -46,11 +45,9 @@ class User extends Authenticatable
 
     /**
      * The attributes that should be cast.
-     *
-     * @var array
      */
     protected $casts = [
-        'id' => 'integer',
+        'id' => 'string',
         'username' => 'string',
         'global_name' => 'string',
         'discriminator' => 'string',
@@ -64,6 +61,7 @@ class User extends Authenticatable
         'mfa_enabled' => 'boolean',
         'premium_type' => 'integer',
         'public_flags' => 'integer',
-        'roles' => 'json',
+        'roles' => 'array',
+        'access_token' => 'array',  // Ensure it's cast as an array
     ];
 }
