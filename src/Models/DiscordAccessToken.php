@@ -2,14 +2,15 @@
 
 namespace Jakyeru\Larascord\Models;
 
-use Illuminate\Database\Eloquent\Model;
+use MongoDB\Laravel\Eloquent\Model;
 
 class DiscordAccessToken extends Model
 {
+    protected $connection = 'mongodb'; // ✅ Ensure it uses MongoDB
+    protected $collection = 'discord_access_tokens'; // ✅ Explicitly set collection name
+
     /**
      * The attributes that are mass assignable.
-     *
-     * @var string[]
      */
     protected $fillable = [
         'access_token',
@@ -23,19 +24,15 @@ class DiscordAccessToken extends Model
 
     /**
      * The attributes that should be cast.
-     *
-     * @var array
      */
     protected $casts = [
-        'access_token' => 'encrypted',
-        'refresh_token' => 'encrypted',
+        'access_token' => 'array', // MongoDB stores as a document/array
+        'refresh_token' => 'array',
         'expires_at' => 'datetime',
     ];
 
     /**
-     * The attributes that should be hidden for arrays.
-     *
-     * @var string[]
+     * The attributes that should be hidden for serialization.
      */
     protected $hidden = [
         'access_token',

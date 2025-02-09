@@ -52,7 +52,7 @@ trait InteractsWithDiscord
      */
     public function getAccessToken(): ?AccessToken
     {
-        $accessToken = $this->accessToken();
+        $accessToken = $this->accessToken;
 
         if ($accessToken && $accessToken->expires_at->isPast()) {
             $accessToken = $this->refreshAccessToken();
@@ -68,7 +68,7 @@ trait InteractsWithDiscord
      */
     public function refreshAccessToken(): ?AccessToken
     {
-        $accessToken = $this->accessToken()->first();
+        $accessToken = $this->accessToken;
         
         if ($accessToken) {
             try {
