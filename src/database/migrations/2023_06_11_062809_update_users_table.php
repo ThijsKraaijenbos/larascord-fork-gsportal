@@ -1,25 +1,30 @@
 <?php
 
+declare(strict_types=1);
+
 use Illuminate\Database\Migrations\Migration;
-use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
+use MongoDB\Laravel\Schema\Blueprint;
 
 return new class extends Migration
 {
+    protected $connection = 'mongodb';
+
     /**
      * Run the migrations.
      */
     public function up(): void
     {
-        Schema::table('users', function (Blueprint $table) {
-            $table->string('global_name')->nullable(); // Removed the 'after()' method
-            $table->string('discriminator')->nullable()->change();
-            $table->string('banner')->nullable(); // Removed the 'after()' method
-            $table->string('banner_color')->nullable(); // Removed the 'after()' method
-            $table->string('accent_color')->nullable(); // Removed the 'after()' method
-            $table->string('premium_type')->nullable(); // Removed the 'after()' method
-            $table->string('public_flags')->nullable(); // Removed the 'after()' method
-            $table->boolean('verified')->nullable()->change();
+        Schema::table('users', function (Blueprint $collection) {
+            // Adding new fields
+            $collection->string('global_name')->nullable(); // Nullable string field
+            $collection->string('discriminator')->nullable(); // Changing the discriminator field to nullable
+            $collection->string('banner')->nullable(); // Nullable string field
+            $collection->string('banner_color')->nullable(); // Nullable string field
+            $collection->string('accent_color')->nullable(); // Nullable string field
+            $collection->string('premium_type')->nullable(); // Nullable string field
+            $collection->string('public_flags')->nullable(); // Nullable string field
+            $collection->boolean('verified')->nullable(); // Nullable boolean field
         });
     }
 
@@ -28,15 +33,15 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::table('users', function (Blueprint $table) {
-            $table->dropColumn('global_name');
-            $table->string('discriminator')->change();
-            $table->dropColumn('banner');
-            $table->dropColumn('banner_color');
-            $table->dropColumn('accent_color');
-            $table->dropColumn('premium_type');
-            $table->dropColumn('public_flags');
-            $table->boolean('verified')->change();
+        Schema::table('users', function (Blueprint $collection) {
+            // Dropping columns
+            $collection->dropColumn('global_name');
+            $collection->dropColumn('banner');
+            $collection->dropColumn('banner_color');
+            $collection->dropColumn('accent_color');
+            $collection->dropColumn('premium_type');
+            $collection->dropColumn('public_flags');
+            $collection->dropColumn('verified');
         });
     }
 };
