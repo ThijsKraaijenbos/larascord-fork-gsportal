@@ -52,14 +52,15 @@ trait InteractsWithDiscord
      */
     public function getAccessToken(): ?AccessToken
     {
-        $accessToken = $this->accessToken;
+        $accessToken = $this->access_token;
 
-        if ($accessToken && $accessToken->expires_at->isPast()) {
+        if ($accessToken && \Carbon\Carbon::parse($accessToken['expires_at'])->isPast()) {
             $accessToken = $this->refreshAccessToken();
 
-            return $accessToken ? new AccessToken($accessToken) : null;
+            return $accessToken ? new AccessToken((object) $accessToken) : null;
         }
-        return new AccessToken($accessToken);
+
+        return new AccessToken((object) $accessToken); // ✅ Convert to object
     }
 
     /**
@@ -68,7 +69,7 @@ trait InteractsWithDiscord
     public function refreshAccessToken(): ?AccessToken
     {
         $accessToken = $this->accessToken;
-        
+
         if ($accessToken) {
             try {
                 $response = (new DiscordService())->refreshAccessToken($accessToken->refresh_token);
@@ -89,8 +90,8 @@ trait InteractsWithDiscord
     }
 
     /**
-    * Get the user's Avatar url
-    */
+     * Get the user's Avatar url
+     */
     public function getAvatar(array $options = []): string
     {
         $extension = $options['extension'] ?? 'png';
